@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Ad Slot - Ads.Wall</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Ads.Wall</h1>
+            <p>Your trusted platform for displaying ads</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="ads.html">Ads</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="payment.html">Payment</a></li>
+                <li><a href="buy-slot.html">Buy Slot</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="buy-slot">
+        <div class="container">
+            <h2>Buy Ad Slot</h2>
+            <p>Select a package and proceed to payment:</p>
+            <!-- Ad Slot Packages -->
+            <div class="ad-slot">
+                <h3>Basic Package</h3>
+                <p>1 week ad placement on the website</p>
+                <p>Price: ₹500</p>
+                <button class="btn" onclick="startPayment(500, 'Basic Package')">Buy Now</button>
+            </div>
+
+            <div class="ad-slot">
+                <h3>Premium Package</h3>
+                <p>2 weeks ad placement on the homepage</p>
+                <p>Price: ₹1000</p>
+                <button class="btn" onclick="startPayment(1000, 'Premium Package')">Buy Now</button>
+            </div>
+
+            <div class="ad-slot">
+                <h3>Exclusive Package</h3>
+                <p>1 month ad placement with priority visibility</p>
+                <p>Price: ₹2000</p>
+                <button class="btn" onclick="startPayment(2000, 'Exclusive Package')">Buy Now</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <p>© 2025 Ads.Wall | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        function startPayment(amount, packageName) {
+            var options = {
+                "key": "your-razorpay-key", // Replace with your Razorpay key
+                "amount": amount * 100, // Amount in smallest currency unit (e.g., cents)
+                "currency": "INR",
+                "name": "Ads.Wall - " + packageName,
+                "description": packageName + " Ad Slot",
+                "handler": function(response) {
+                    alert('Payment successful. Your ad slot has been booked.');
+                    sendEmailNotification(response);
+                },
+                "prefill": {
+                    "email": "aflive895@gmail.com",
+                    "contact": "7736807589"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+        }
+
+        function sendEmailNotification(response) {
+            // You can integrate an email API like SendGrid or use your backend to send an email
+            // Example:
+            fetch('send_email.php', {
+                method: 'POST',
+                body: JSON.stringify({ paymentResponse: response, email: 'aflive895@gmail.com' })
+            });
+        }
+    </script>
+</body>
+</html>
